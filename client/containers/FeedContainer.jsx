@@ -44,12 +44,14 @@ class FeedContainer extends Component {
 	   console.dir(socket)
 	   
 	   socket.on('ticketPosted',(res)=>{
-		   console.dir(res)
+       console.dir(res)
+       this.props.getTickets(this.props.roomId);
 		   store.dispatch(ticketActions.postTicket(res))
 	   })
 
 	   socket.on('ticketUpdated',(res)=>{
-		   console.dir(res)
+       console.dir(res)
+       this.props.getTickets(this.props.roomId);
 		   store.dispatch(ticketActions.updateTicket(res))
 	   })
   }
