@@ -17,6 +17,7 @@ import MenteeTicketBox from "../components/MenteeTicketBox";
 import BystanderTicketBox from "../components/BystanderTicketBox";
 import TicketCreator from "../components/TicketCreator";
 import io from "socket.io-client";
+import store from '../store.js';
 
 const mapStateToProps = state => ({
   userId: state.user.userId,
@@ -44,12 +45,12 @@ class FeedContainer extends Component {
 	   
 	   socket.on('ticketPosted',(res)=>{
 		   console.dir(res)
-		   dispatch(postTicket(res))
+		   store.dispatch(ticketActions.postTicket(res))
 	   })
 
 	   socket.on('statusChanged',(res)=>{
 		   console.dir(res)
-		   dispatch(changeStatus(res))
+		   store.dispatch(ticketActions.changeStatus(res))
 	   })
   }
 
@@ -122,7 +123,7 @@ class FeedContainer extends Component {
         <h1>{this.props.roomName}</h1>
         <div className="ticketDisplay overflow-auto">{activeTickets}</div>
         <div className="ticketCreator">
-          <TicketCreator {...this.props} key={this.props.userId} />
+          <TicketCreator {...this.props} key={this.props.userId} socket={socket} />
         </div>
       </div>
     );

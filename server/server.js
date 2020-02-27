@@ -2,9 +2,10 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-var io = require('socket.io')(server);
+const db = require("./models/userModel");
 const app = express();
 var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
 // server port
 const PORT = 3000;
@@ -100,9 +101,9 @@ io.on('connection', function (socket) {
         ticket.ticketId = result.rows[0]._id;
         ticket.timestamp = result.rows[0].timestamp;
         ticket.menteeId = result.rows[0].mentee_id;
-        connections.forEach((currentConnection)=>{
-					currentConnection.emit('ticketPosted', ticket)
-				})
+        // connections.forEach((currentConnection)=>{
+				// 	currentConnection.emit('ticketPosted', ticket)
+				// })
         io.emit('ticketPosted', ticket);
       })
       .catch(err =>
