@@ -18,7 +18,7 @@ const TicketCreator = props => (
     <Form
       onSubmit={(e) => {
         e.preventDefault();
-        props.dispatch(ticketActions.postTicketSocket(socket, props.userId, props.messageInput, props.messageRating, props.roomId))
+        props.dispatch(ticketActions.postTicketSocket(props.socket, props.userId, props.messageInput, props.messageRating, props.roomId))
       }}
       // onSubmit={e => {
       //   e.preventDefault();

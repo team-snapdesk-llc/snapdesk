@@ -122,7 +122,7 @@ class FeedContainer extends Component {
         <h1>{this.props.roomName}</h1>
         <div className="ticketDisplay overflow-auto">{activeTickets}</div>
         <div className="ticketCreator">
-          <TicketCreator {...this.props} key={this.props.userId} />
+          <TicketCreator {...this.props} key={this.props.userId} socket={socket} />
         </div>
       </div>
     );
