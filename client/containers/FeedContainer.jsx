@@ -42,7 +42,6 @@ class FeedContainer extends Component {
 	   socket = io.connect("http://localhost:3000")
 	   console.dir(socket)
 	   
-	   
 	   socket.on('ticketPosted',(res)=>{
 		   console.dir(res)
 		   dispatch(postTicket(res))

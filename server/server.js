@@ -2,9 +2,9 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-var server = require('http').Server(app);
 var io = require('socket.io')(server);
 const app = express();
+var server = require('http').Server(app);
 
 // server port
 const PORT = 3000;
