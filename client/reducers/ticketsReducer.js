@@ -17,7 +17,6 @@ const ticketState = {
   messageRating: '',
   activeTickets: [],
   ticketsCount: 0,
-  //roomId: ''
 };
 
 const ticketsReducer = (state = ticketState, action) => {
@@ -53,8 +52,9 @@ const ticketsReducer = (state = ticketState, action) => {
         menteeId: action.payload.menteeId,
         timestamp: action.payload.timestamp,
         status: 'active',
-        //adding new mentorId
         mentorId:'',
+        //adding new feedback
+        feedback: '',
       };
       // make a shallow copy of existing array and push new ticket to it
       let updatedTickets = state.activeTickets.slice();
@@ -119,6 +119,9 @@ const ticketsReducer = (state = ticketState, action) => {
         activeTickets: updatedTickets,
         ticketsCount: state.ticketsCount - 1
       };
+
+    case types.POST_FEEDBACK: 
+      return {...state};
 
     case types.RESOLVE_TICKET:
         updatedTickets = state.activeTickets.map((ticket, index) => {

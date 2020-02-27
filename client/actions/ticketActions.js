@@ -63,32 +63,38 @@ export const updateMessage = event => ({
   payload: event.target.value
 });
 
+export const deleteTicket = id => (dispatch, getState) =>
+// don't actually delete the ticket from the DB, just set status to deleted so it isn't displayed
+axios
+.put("/api/tickets/update", {
+  ticketId: id,
+  status: "deleted",
+  mentorId: null
+})
+.then(({ data }) => {
+  if (!data.isLoggedIn) {
+    dispatch({
+      type: types.USER_LOGOUT,
+      payload: data
+    });
+  } else {
+    dispatch({
+      type: types.DELETE_TICKET,
+      payload: id
+    });
+  }
+});
+
+//steps for resolving ticket
+export const postFeedback = id => ({
+  type: types.POST_FEEDBACK,
+  payload: id
+})
+
 export const updateRating = event => ({
   type: types.UPDATE_RATING,
   payload: event.target.value
 });
-
-export const deleteTicket = id => (dispatch, getState) =>
-  // don't actually delete the ticket from the DB, just set status to deleted so it isn't displayed
-  axios
-    .put("/api/tickets/update", {
-      ticketId: id,
-      status: "deleted",
-      mentorId: null
-    })
-    .then(({ data }) => {
-      if (!data.isLoggedIn) {
-        dispatch({
-          type: types.USER_LOGOUT,
-          payload: data
-        });
-      } else {
-        dispatch({
-          type: types.DELETE_TICKET,
-          payload: id
-        });
-      }
-    });
 
 export const resolveTicket = id => (dispatch, getState) =>
   axios

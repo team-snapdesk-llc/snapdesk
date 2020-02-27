@@ -10,22 +10,50 @@
  */
 
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Nav, NavDropdown, FormControl, InputGroup } from 'react-bootstrap';
+
+
 
 class MenteeTicketBox extends Component {
   constructor(props) {
     super(props);
   }
 
+  
   render () {
-    
     let buttons;    
+    /////////////////////////
+    let resolveDropDown = (
+    <InputGroup className="feedbackInput">
+    <FormControl
+      id="feedbackForm"
+      type="text"
+      placeholder="Feedback"
+      /*value={}*/
+      onChange={e => {
+        (e.target.value);
+      }}
+    />
+    <InputGroup.Append>
+      <Button
+        onClick={e => {
+          e.preventDefault();
+          //props.addRoom();
+        }}
+      >
+        Submit
+      </Button>
+    </InputGroup.Append>
+    </InputGroup>
+    );
+    //////////////////////////
 
     if (this.props.ticket.status === 'active') {
       //if the ticket is active and this user is the mentee (user who posted it), disable resolve until someone accepts it
       buttons = (
         <span>
-          <Button disabled type="button" className="btn btn-secondary">Resolve</Button>
+          {resolveDropDown}
+          <Button disabled type="button" className="btn btn-secondary">Resolve(disabled)</Button>
           <Button onClick={() => this.props.deleteTicket(this.props.ticket.messageId)} type="button" className="btn btn-success">Delete</Button>
         </span>
       )
@@ -33,8 +61,15 @@ class MenteeTicketBox extends Component {
       //if someone does accept it, enable resolve and disable the delete button
       buttons = (
         <span>
-          <Button onClick={() => this.props.resolveTicket(this.props.ticket.messageId)}type="button" className="btn btn-secondary">Resolve</Button>
-          <Button disabled type="button" className="btn btn-success">Delete</Button>
+          {resolveDropDown}
+          <Button /*onClick={
+            this.props.postFeedback(this.props.ticket.messageId)
+            this.props.resolveTicket(this.props.ticket.messageId)}*/
+            type="button" className="btn btn-secondary">
+              Resolve
+          </Button>
+          <Button disabled type="button" className="btn btn-success">Delete(disabled)</Button>
+          {}
         </span>
       )
     }
