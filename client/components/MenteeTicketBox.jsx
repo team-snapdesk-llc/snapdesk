@@ -10,7 +10,7 @@
  */
 
 import React, { Component } from 'react';
-import { Button, Nav, NavDropdown, FormControl, InputGroup } from 'react-bootstrap';
+import { Button, Nav, Dropdown, FormControl, InputGroup } from 'react-bootstrap';
 
 
 
@@ -23,7 +23,7 @@ class MenteeTicketBox extends Component {
   render () {
     let buttons;    
     /////////////////////////
-    let resolveDropDown = (
+    let resolve = (
     <InputGroup className="feedbackInput">
     <FormControl
       id="feedbackForm"
@@ -46,13 +46,16 @@ class MenteeTicketBox extends Component {
     </InputGroup.Append>
     </InputGroup>
     );
+    let resolveDropDown = (
+      <Dropdown title="RESOLVE">{resolveDropDown}</Dropdown>
+    );
     //////////////////////////
 
     if (this.props.ticket.status === 'active') {
       //if the ticket is active and this user is the mentee (user who posted it), disable resolve until someone accepts it
       buttons = (
         <span>
-          {resolveDropDown}
+          <Button onClick={resolveDropDown}>RESOLVE</Button>
           <Button disabled type="button" className="btn btn-secondary">Resolve(disabled)</Button>
           <Button onClick={() => this.props.deleteTicket(this.props.ticket.messageId)} type="button" className="btn btn-success">Delete</Button>
         </span>
@@ -61,7 +64,7 @@ class MenteeTicketBox extends Component {
       //if someone does accept it, enable resolve and disable the delete button
       buttons = (
         <span>
-          {resolveDropDown}
+          <Button onClick={resolveDropDown}>RESOLVE</Button>
           <Button /*onClick={
             this.props.postFeedback(this.props.ticket.messageId)
             this.props.resolveTicket(this.props.ticket.messageId)}*/
