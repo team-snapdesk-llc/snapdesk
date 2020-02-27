@@ -101,9 +101,6 @@ io.on('connection', function (socket) {
         ticket.ticketId = result.rows[0]._id;
         ticket.timestamp = result.rows[0].timestamp;
         ticket.menteeId = result.rows[0].mentee_id;
-        // connections.forEach((currentConnection)=>{
-				// 	currentConnection.emit('ticketPosted', ticket)
-				// })
         io.emit('ticketPosted', ticket);
       })
       .catch(err =>
@@ -136,21 +133,5 @@ io.on('connection', function (socket) {
       })
     );
   })
-	// socket.on('changeStatus',(markedItem)=>{
-	// 	var condition   = {itemId:markedItem.id},
-	// 		updateValue = {completed:markedItem.completed}
-
-	// 	todoModel.update(condition,updateValue,(err,result)=>{
-	// 		if (err) {console.log("---Gethyl MARK COMPLETE failed!! " + err)}
-	// 		else {
-	// 			// connections.forEach((currentConnection)=>{
-	// 			// 	currentConnection.emit('statusChanged',markedItem)
-	// 			// })
-	// 			io.emit('statusChanged',markedItem)
-
-	// 			console.log({message:"+++Gethyl MARK COMPLETE worked!!"})
-	// 		}
-	// 	})
-	// })
 	
 });
