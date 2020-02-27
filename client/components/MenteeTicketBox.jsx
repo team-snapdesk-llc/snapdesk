@@ -10,9 +10,10 @@
  */
 
 import React, { Component } from 'react';
-import { Button, Nav, Dropdown, FormControl, InputGroup } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
-
+//import resolve btn and its functionalities
+import ResolveBtn from './ResolveBtn.jsx';
 
 class MenteeTicketBox extends Component {
   constructor(props) {
@@ -22,40 +23,18 @@ class MenteeTicketBox extends Component {
   
   render () {
     let buttons;    
-    /////////////////////////
-    let resolve = (
-    <InputGroup className="feedbackInput">
-    <FormControl
-      id="feedbackForm"
-      type="text"
-      placeholder="Feedback"
-      /*value={}*/
-      onChange={e => {
-        (e.target.value);
-      }}
-    />
-    <InputGroup.Append>
-      <Button
-        onClick={e => {
-          e.preventDefault();
-          //props.addRoom();
-        }}
-      >
-        Submit
-      </Button>
-    </InputGroup.Append>
-    </InputGroup>
-    );
-    let resolveDropDown = (
-      <Dropdown title="RESOLVE">{resolveDropDown}</Dropdown>
-    );
-    //////////////////////////
 
     if (this.props.ticket.status === 'active') {
       //if the ticket is active and this user is the mentee (user who posted it), disable resolve until someone accepts it
       buttons = (
         <span>
-          <Button onClick={resolveDropDown}>RESOLVE</Button>
+          {/*resolve button testing*/}
+          <ResolveBtn 
+            messageId={this.props.ticket.messageId}
+            resolveTicket={this.props.resolveTicket}
+            updateRating={this.props.updateRating}
+            postFeedback={this.props.postFeedback}
+          />
           <Button disabled type="button" className="btn btn-secondary">Resolve(disabled)</Button>
           <Button onClick={() => this.props.deleteTicket(this.props.ticket.messageId)} type="button" className="btn btn-success">Delete</Button>
         </span>
@@ -64,7 +43,6 @@ class MenteeTicketBox extends Component {
       //if someone does accept it, enable resolve and disable the delete button
       buttons = (
         <span>
-          <Button onClick={resolveDropDown}>RESOLVE</Button>
           <Button /*onClick={
             this.props.postFeedback(this.props.ticket.messageId)
             this.props.resolveTicket(this.props.ticket.messageId)}*/

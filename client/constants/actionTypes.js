@@ -22,6 +22,8 @@ export const USER_LOGOUT = "USER_LOGOUT";
 export const ADD_ROOM = "ADD_ROOM";
 export const LOAD_ROOMS = "LOAD_ROOM";
 export const UPDATE_NEWROOM = "UPDATE_NEWROOM";
+export const UPDATE_ACTIVEROOM = "UPDATE_ACTIVEROOM";
+export const UPDATE_JOINROOMNAME = "UPDATE_JOINROOMNAME";
 
 //before resolving ticket
 export const POST_FEEDBACK = "POST_FEEDBACK";
