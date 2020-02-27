@@ -15,10 +15,14 @@ import { Form, Button } from 'react-bootstrap';
 const TicketCreator = props => (
   <div>
     <Form
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault();
-        props.postTicket();
+        props.dispatch(postTicketSocket(socket, props.userId, props.messageInput, props.messageRating, props.roomId))
       }}
+      // onSubmit={e => {
+      //   e.preventDefault();
+      //   props.postTicket();
+      // }}
     >
       <Form.Group
         controlId="exampleForm.ControlTextarea1"

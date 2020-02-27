@@ -13,32 +13,50 @@
 import axios from "axios";
 import * as types from "../constants/actionTypes";
 
-export const postTicket = () => (dispatch, getState) =>
-  // this part is why thunk is necessary to delay the firing of the dispatch handlers
-  axios
-    .post("/api/tickets", {
-      // POST request to create a new ticket
-      mentee_id: getState().user.userId,
-      room_id: 1,
-      message: getState().tickets.messageInput,
-      status: "active",
-      snaps_given: getState().tickets.messageRating
-    })
-    .then(({ data }) => {
-      // check if the returned user is logged in, if not, reroute
-      if (!data.isLoggedIn) {
-        dispatch({
-          type: types.USER_LOGOUT,
-          payload: data
-        });
-      } else {
-        // if they're still logged in, continue with new ticket request
-        dispatch({
-          type: types.POST_TICKET,
-          payload: data
-        });
-      }
-    });
+export const postTicket = (data) => ({
+	type: "POST_TICKET",
+	payload: data,
+})
+
+export const postTicketSocket = (socket, userId, messageInput, messageRating, roomId) => {
+	return (dispatch) => {
+		let ticket = {
+				mentee_id: userId,
+				room_id: roomId,
+        message: messageInput,
+        status: 'active',
+        snaps_given: messageRating,
+		  }
+	    socket.emit('postTicket',ticket)		
+	}	
+}
+
+// export const postTicket = () => (dispatch, getState) =>
+//   // this part is why thunk is necessary to delay the firing of the dispatch handlers
+//   axios
+//     .post("/api/tickets", {
+//       // POST request to create a new ticket
+//       mentee_id: getState().user.userId,
+//       room_id: 1,
+//       message: getState().tickets.messageInput,
+//       status: "active",
+//       snaps_given: getState().tickets.messageRating
+//     })
+//     .then(({ data }) => {
+//       // check if the returned user is logged in, if not, reroute
+//       if (!data.isLoggedIn) {
+//         dispatch({
+//           type: types.USER_LOGOUT,
+//           payload: data
+//         });
+//       } else {
+//         // if they're still logged in, continue with new ticket request
+//         dispatch({
+//           type: types.POST_TICKET,
+//           payload: data
+//         });
+//       }
+//     });
 
 export const getTickets = roomId => dispatch =>
   // get all active tickets from the DB. the timer for this is configurable from FeedContainer.jsx

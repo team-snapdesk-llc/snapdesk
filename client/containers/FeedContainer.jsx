@@ -16,6 +16,7 @@ import * as ticketActions from "../actions/ticketActions";
 import MenteeTicketBox from "../components/MenteeTicketBox";
 import BystanderTicketBox from "../components/BystanderTicketBox";
 import TicketCreator from "../components/TicketCreator";
+import io from "socket.io-client";
 
 const mapStateToProps = state => ({
   userId: state.user.userId,
@@ -30,9 +31,27 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(ticketActions, dispatch);
 
+let socket;
+
 class FeedContainer extends Component {
   constructor(props) {
     super(props);
+
+    const {dispatch} = this.props
+	
+	   socket = io.connect("http://localhost:3000")
+	   console.dir(socket)
+	   
+	   
+	   socket.on('ticketPosted',(res)=>{
+		   console.dir(res)
+		   dispatch(postTicket(res))
+	   })
+
+	   socket.on('statusChanged',(res)=>{
+		   console.dir(res)
+		   dispatch(changeStatus(res))
+	   })
   }
 
   componentWillMount() {
@@ -41,14 +60,14 @@ class FeedContainer extends Component {
 
   componentDidMount() {
     //set the timer for how often the ticket feed will reload active tickets
-    this.interval = setInterval(
-      () => this.props.getTickets(this.props.roomId),
-      5000
-    );
+    // this.interval = setInterval(
+    //   () => this.props.getTickets(this.props.roomId),
+    //   5000
+    // );
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    // clearInterval(this.interval);
     document.title = "SnapDesk";
   }
 
@@ -57,6 +76,7 @@ class FeedContainer extends Component {
   }
 
   render() {
+    // const { dispatch, activeTickets } = this.props;
     // build activeTickets list
     let activeTickets;
     // if there are no active tickets, display a message in the background saying nothing here

@@ -53,8 +53,8 @@ const ticketsReducer = (state = ticketState, action) => {
         menteeId: action.payload.menteeId,
         timestamp: action.payload.timestamp,
         status: 'active',
-        //adding new mentorId
-        mentorId:'',
+        mentorId: '',
+        roomId: action.payload.roomId,
       };
       // make a shallow copy of existing array and push new ticket to it
       let updatedTickets = state.activeTickets.slice();
