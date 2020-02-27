@@ -11,6 +11,8 @@
 
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import * as ticketActions from "../actions/ticketActions";
+import store from '../store.js';
 
 class MenteeTicketBox extends Component {
   constructor(props) {
@@ -26,14 +28,14 @@ class MenteeTicketBox extends Component {
       buttons = (
         <span>
           <Button disabled type="button" className="btn btn-secondary">Resolve</Button>
-          <Button onClick={() => this.props.deleteTicket(this.props.ticket.messageId)} type="button" className="btn btn-success">Delete</Button>
+          <Button onClick={() => store.dispatch(ticketActions.updateTicketSocket(props.socket, props.ticket.messageId, 'deleted', (props.ticket.mentorId || null)))} type="button" className="btn btn-success">Delete</Button>
         </span>
       )
     } else {
       //if someone does accept it, enable resolve and disable the delete button
       buttons = (
         <span>
-          <Button onClick={() => this.props.resolveTicket(this.props.ticket.messageId)}type="button" className="btn btn-secondary">Resolve</Button>
+          <Button onClick={() => store.dispatch(ticketActions.updateTicketSocket(props.socket, props.ticket.messageId, 'resolved', (props.ticket.mentorId || null)))} type="button" className="btn btn-secondary">Resolve</Button>
           <Button disabled type="button" className="btn btn-success">Delete</Button>
         </span>
       )

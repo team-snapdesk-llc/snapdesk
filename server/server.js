@@ -112,25 +112,30 @@ io.on('connection', function (socket) {
         })
       );
 
-    // var todoItem = new todoModel({
-    // 	itemId:addData.id,
-		// 	item:addData.item,
-		// 	completed: addData.completed
-		// })
-
-		// todoItem.save((err,result)=> {
-		// 	if (err) {console.log("---Gethyl ADD NEW ITEM failed!! " + err)}
-		// 	else {
-		// 		// connections.forEach((currentConnection)=>{
-		// 		// 	currentConnection.emit('ticketAdded',addData)
-		// 		// })
-		// 		io.emit('ticketAdded',addData)
-				
-		// 		console.log({message:"+++Gethyl ADD NEW ITEM worked!!"})
-		// 	}
-		// })
 	})
 
+  socket.on('updateTicket', (ticket) => {
+    const { ticketId, status, mentorId } = ticket;
+    const updateTicket = {
+      text: `
+        UPDATE tickets
+        SET status = $1, mentor_id = $3
+        WHERE _id = $2;
+      `,
+      values: [status, ticketId, mentorId]
+    };
+
+    db.query(updateTicket)
+    .then(result => {
+      console.log('UPDATE RESULT: ', result);
+      io.emit('ticketUpdated', result);
+    })
+    .catch(err =>
+      next({
+        log: `Error in middleware ticketsController.updateTicket: ${err}`
+      })
+    );
+  })
 	// socket.on('changeStatus',(markedItem)=>{
 	// 	var condition   = {itemId:markedItem.id},
 	// 		updateValue = {completed:markedItem.completed}

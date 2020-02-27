@@ -48,9 +48,9 @@ class FeedContainer extends Component {
 		   store.dispatch(ticketActions.postTicket(res))
 	   })
 
-	   socket.on('statusChanged',(res)=>{
+	   socket.on('ticketUpdated',(res)=>{
 		   console.dir(res)
-		   store.dispatch(ticketActions.changeStatus(res))
+		   store.dispatch(ticketActions.updateTicket(res))
 	   })
   }
 
@@ -96,9 +96,9 @@ class FeedContainer extends Component {
               messageInput={this.props.activeTickets[i].messageInput}
               messageRating={this.props.activeTickets[i].messageRating}
               ticket={this.props.activeTickets[i]}
-              //adding new userId
               userId={this.props.userId}
               key={this.props.activeTickets[i].messageId}
+              socket={socket}
             />
           );
           // otherwise render the mentee ticket box
@@ -111,6 +111,7 @@ class FeedContainer extends Component {
               messageRating={this.props.activeTickets[i].messageRating}
               ticket={this.props.activeTickets[i]}
               key={this.props.activeTickets[i].messageId}
+              socket={socket}
             />
           );
         }
