@@ -28,7 +28,7 @@ class MenteeTicketBox extends Component {
       buttons = (
         <span>
           <Button disabled type="button" className="btn btn-secondary">Resolve</Button>
-          <Button onClick={() => store.dispatch(ticketActions.updateTicketSocket(this.props.socket, this.props.ticket.messageId, 'deleted', (this.props.ticket.mentorId || null)))} type="button" className="btn btn-success">Delete</Button>
+          <Button onClick={() => store.dispatch(ticketActions.updateTicketSocket(this.props.socket, this.props.ticket.messageId, 'deleted', ''))} type="button" className="btn btn-success">Delete</Button>
         </span>
       )
     } else {

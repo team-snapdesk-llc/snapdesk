@@ -68,7 +68,7 @@ app.use((err, req, res, next) => {
 //   console.log(`Server is listening on port: ${PORT}`);
 // });
 
-server.listen(PORT, () => console.log('express server running.'));
+server.listen(PORT, '0.0.0.0', () => console.log('express server running.'));
 
 /***************************************************************************************** */
 /* Socket logic starts here																   */

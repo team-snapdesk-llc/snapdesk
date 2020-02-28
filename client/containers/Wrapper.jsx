@@ -13,6 +13,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as userActions from "../actions/userActions";
 import * as roomActions from "../actions/roomActions";
+import * as ticketActions from "../actions/ticketActions";
 import LeftNav from "../components/LeftNav";
 import RightNav from "../components/RightNav";
 import FeedContainer from "./FeedContainer";
@@ -32,7 +33,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...userActions, ...roomActions }, dispatch);
+  bindActionCreators({ ...userActions, ...roomActions, ...ticketActions }, dispatch);
 
 class Wrapper extends Component {
   constructor(props) {
@@ -40,9 +41,22 @@ class Wrapper extends Component {
   }
 
   componentDidMount() {
-    this.props.getUserData().then(res => {
-      this.props.getRooms(this.props.userId);
-    });
+    this.props.getUserData();
+    setTimeout(() => this.props.getRooms(this.props.userId), 1000);
+    
+    // .then(res => {
+    //   console.log('RESULT', res)
+    //   this.props.getRooms(this.props.userId)
+      
+    // })
+    // .then(res => {
+    //   console.log('now get tickets')
+    //     this.props.getTickets(this.props.activeRoom.id)
+    // });
+  }
+
+  componentDidUpdate() {
+    setTimeout(() => this.props.getTickets(this.props.activeRoom.id), 0);
   }
 
   render() {

@@ -18,6 +18,7 @@ import BystanderTicketBox from "../components/BystanderTicketBox";
 import TicketCreator from "../components/TicketCreator";
 import io from "socket.io-client";
 import store from '../store.js';
+import localIp from '../../server/_secret/localIP.js';
 
 const mapStateToProps = state => ({
   userId: state.user.userId,
@@ -40,32 +41,26 @@ class FeedContainer extends Component {
 
     const {dispatch} = this.props
 	
-	   socket = io.connect("http://localhost:3000")
+	   socket = io.connect(localIp)
 	   console.dir(socket)
 	   
 	   socket.on('ticketPosted',(res)=>{
        console.dir(res)
+       console.log('POST ROOM ID: ', this.props.roomId)
        this.props.getTickets(this.props.roomId);
 		   store.dispatch(ticketActions.postTicket(res))
 	   })
 
 	   socket.on('ticketUpdated',(res)=>{
        console.dir(res)
+       console.log('UPDATE ROOM ID: ', this.props.roomId)
        this.props.getTickets(this.props.roomId);
 		   store.dispatch(ticketActions.updateTicket(res))
 	   })
   }
 
-  componentWillMount() {
-    this.props.getTickets(this.props.roomId);
-  }
-
   componentDidMount() {
-    //set the timer for how often the ticket feed will reload active tickets
-    // this.interval = setInterval(
-    //   () => this.props.getTickets(this.props.roomId),
-    //   5000
-    // );
+    setTimeout(() => this.props.getTickets(this.props.roomId), 1000);
   }
 
   componentWillUnmount() {
@@ -78,7 +73,6 @@ class FeedContainer extends Component {
   }
 
   render() {
-    // const { dispatch, activeTickets } = this.props;
     // build activeTickets list
     let activeTickets;
     // if there are no active tickets, display a message in the background saying nothing here
