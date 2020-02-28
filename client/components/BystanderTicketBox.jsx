@@ -48,7 +48,7 @@ class BystanderTicketBox extends Component {
       buttons = (
         <span>
           <Button disabled type="button" className="btn btn-success">Accept (disabled)</Button>
-          <Button onClick={() => store.dispatch(ticketActions.updateTicketSocket(this.props.socket, this.props.ticket.messageId, 'active', ''))} type="button" className="btn btn-warning">Cancel</Button>
+          <Button onClick={() => store.dispatch(ticketActions.updateTicketSocket(this.props.socket, this.props.ticket.messageId, 'active', null))} type="button" className="btn btn-warning">Cancel</Button>
        </span>
         )
     }

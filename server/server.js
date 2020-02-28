@@ -130,9 +130,7 @@ io.on('connection', function (socket) {
       io.emit('ticketUpdated', result);
     })
     .catch(err =>
-      next({
-        log: `Error in middleware ticketsController.updateTicket: ${err}`
-      })
+      console.log(`Error in middleware ticketsController.updateTicket: ${err}`)
     );
   })
 	
