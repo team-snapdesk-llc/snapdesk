@@ -10,6 +10,7 @@
  */
 
 // add action type constants i.e.:
+export const USER_PAGE = 'USER_PAGE';
 export const POST_TICKET = "POST_TICKET";
 export const ACCEPT_TICKET = "ACCEPT_TICKET";
 export const GET_TICKETS = "GET_TICKETS";
