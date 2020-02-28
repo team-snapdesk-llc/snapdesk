@@ -52,12 +52,14 @@ class ResolveBtn extends Component {
             type="text"
             placeholder="Feedback"
             /*value={}*/
-            /*onChange={e => {props.someFunc(e.target.value);}}*/
+            onChange={e => {
+              console.log('typing');
+              this.props.updateFeedback(e);}}
             />
             <InputGroup.Append>
               <Button onClick={e => {
                   e.preventDefault();
-                  //props.someFunc();
+                  this.props.resolveTicket(this.props.messageId);
                 }}
               >
                 Submit

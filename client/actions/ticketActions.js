@@ -86,9 +86,9 @@ axios
 });
 
 //steps for resolving ticket
-export const postFeedback = id => ({
-  type: types.POST_FEEDBACK,
-  payload: id
+export const updateFeedback = event => ({
+  type: types.UPDATE_FEEDBACK,
+  payload: event.target.value
 })
 
 export const updateRating = event => ({
@@ -96,12 +96,17 @@ export const updateRating = event => ({
   payload: event.target.value
 });
 
+export const postFeedback = id => ({
+  type: types.POST_FEEDBACK,
+  payload: id
+})
+
 export const resolveTicket = id => (dispatch, getState) =>
   axios
     .put("/api/tickets/update", {
       ticketId: id,
       status: "resolved",
-      mentorId: getState().user.userId
+      //mentorId: getState().user.userId
     })
     .then(({ data }) => {
       if (!data.isLoggedIn) {

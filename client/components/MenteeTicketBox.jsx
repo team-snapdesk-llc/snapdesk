@@ -28,13 +28,6 @@ class MenteeTicketBox extends Component {
       //if the ticket is active and this user is the mentee (user who posted it), disable resolve until someone accepts it
       buttons = (
         <span>
-          {/*resolve button testing*/}
-          <ResolveBtn 
-            messageId={this.props.ticket.messageId}
-            resolveTicket={this.props.resolveTicket}
-            updateRating={this.props.updateRating}
-            postFeedback={this.props.postFeedback}
-          />
           <Button disabled type="button" className="btn btn-secondary">Resolve(disabled)</Button>
           <Button onClick={() => this.props.deleteTicket(this.props.ticket.messageId)} type="button" className="btn btn-success">Delete</Button>
         </span>
@@ -43,12 +36,17 @@ class MenteeTicketBox extends Component {
       //if someone does accept it, enable resolve and disable the delete button
       buttons = (
         <span>
-          <Button /*onClick={
-            this.props.postFeedback(this.props.ticket.messageId)
-            this.props.resolveTicket(this.props.ticket.messageId)}*/
-            type="button" className="btn btn-secondary">
+          {/* <Button type="button" className="btn btn-secondary">
               Resolve
-          </Button>
+          </Button> */}
+          {/*resolve button testing*/}
+          <ResolveBtn 
+            messageId={this.props.ticket.messageId} //passes specific ticket Id
+            updateRating={this.props.updateRating} //to update snaps
+            updateFeedback={this.props.updateFeedback} //updates feedback based on user input
+            postFeedback={this.props.postFeedback}  //to send feedback to database
+            resolveTicket={this.props.resolveTicket} //submit button finally invokes resolveTicket
+          />
           <Button disabled type="button" className="btn btn-success">Delete(disabled)</Button>
           {}
         </span>

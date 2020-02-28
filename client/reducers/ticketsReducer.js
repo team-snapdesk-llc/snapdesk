@@ -120,22 +120,33 @@ const ticketsReducer = (state = ticketState, action) => {
         ticketsCount: state.ticketsCount - 1
       };
 
+    case types.UPDATE_FEEDBACK:
+
+      return {...state, feedback: action.payload };
+
     case types.POST_FEEDBACK: 
       return {...state};
 
     case types.RESOLVE_TICKET:
         updatedTickets = state.activeTickets.map((ticket, index) => {
           if (ticket.messageId === action.payload) {
-            idx = index
-            return ticket
+            idx = index;
+            return ticket;
           }
           return ticket;
-        })    
-        updatedTickets.splice(idx, 1)
+        })  
+        //update status to resolved, and update rating and feedback
+        updatedTickets[idx] =  {
+          ...updatedTickets[idx],
+          //feedback: state.feedback, 
+          messageRating: state.messageRating,
+          status: 'resolved'
+        }; 
       return { 
         ...state,
         activeTickets: updatedTickets,
-        ticketsCount: state.ticketsCount - 1
+        ticketsCount: state.ticketsCount - 1,
+        feedback: ''
       };
 
     case types.UPDATE_MESSAGE:

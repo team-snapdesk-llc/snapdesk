@@ -27,6 +27,7 @@ export const UPDATE_JOINROOMNAME = "UPDATE_JOINROOMNAME";
 
 //before resolving ticket
 export const POST_FEEDBACK = "POST_FEEDBACK";
+export const UPDATE_FEEDBACK = "UPDATE_FEEDBACK";
 export const UPDATE_RATING = "UPDATE_RATING";
 //then resolve ticket
 export const RESOLVE_TICKET = "RESOLVE_TICKET";

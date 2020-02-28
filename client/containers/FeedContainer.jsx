@@ -86,9 +86,10 @@ class FeedContainer extends Component {
           ticketBox = (
             <MenteeTicketBox
               deleteTicket={this.props.deleteTicket}
-              resolveTicket={this.props.resolveTicket}
+              resolveTicket={this.props.resolveTicket} // resolve button related
               updateRating={this.props.updateRating}
-              postFeedback={this.props.postFeedback}
+              updateFeedback={this.props.updateFeedback}
+              postFeedback={this.props.postFeedback} // resolve button related
               messageInput={this.props.activeTickets[i].messageInput}
               messageRating={this.props.activeTickets[i].messageRating}
               ticket={this.props.activeTickets[i]}
