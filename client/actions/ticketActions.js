@@ -36,12 +36,13 @@ export const updateTicket = (data) => ({
   payload: data,
 })
 
-export const updateTicketSocket = (socket, ticketId, status, mentorId) => {
+export const updateTicketSocket = (socket, ticketId, status, mentorId, feedback) => {
   return (dispatch) => {
     let ticket = {
       ticketId: ticketId,
       status: status,
       mentorId: mentorId,
+      feedback: feedback,
     }
     socket.emit('updateTicket', ticket)
   }
@@ -70,6 +71,12 @@ export const updateMessage = event => ({
   type: types.UPDATE_MESSAGE,
   payload: event.target.value
 });
+
+//steps for resolving ticket
+export const updateFeedback = event => ({
+  type: types.UPDATE_FEEDBACK,
+  payload: event.target.value
+})
 
 export const updateRating = event => ({
   type: types.UPDATE_RATING,

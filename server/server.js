@@ -83,7 +83,7 @@ io.on('connection', function (socket) {
 	
 	socket.on('postTicket',(ticket)=>{
     //add logic to add a new ticket to the DB 
-    const { snaps_given, mentee_id, status, message, room_id } = ticket;
+    const { snaps_given, mentee_id, status, message, room_id, feedback } = ticket;
     const postTicket = {
       text: `
         INSERT INTO tickets
@@ -114,14 +114,14 @@ io.on('connection', function (socket) {
 	})
 
   socket.on('updateTicket', (ticket) => {
-    const { ticketId, status, mentorId } = ticket;
+    const { ticketId, status, mentorId, feedback } = ticket;
     const updateTicket = {
       text: `
         UPDATE tickets
-        SET status = $1, mentor_id = $3
+        SET status = $1, mentor_id = $3, feedback = $4
         WHERE _id = $2;
       `,
-      values: [status, ticketId, mentorId]
+      values: [status, ticketId, mentorId, feedback]
     };
 
     db.query(updateTicket)

@@ -14,13 +14,16 @@ import { Button } from 'react-bootstrap';
 import * as ticketActions from "../actions/ticketActions";
 import store from '../store.js';
 
+//import resolve btn and its functionalities
+import ResolveBtn from './ResolveBtn.jsx';
+
 class MenteeTicketBox extends Component {
   constructor(props) {
     super(props);
   }
 
+  
   render () {
-    
     let buttons;    
 
     if (this.props.ticket.status === 'active') {
@@ -28,15 +31,27 @@ class MenteeTicketBox extends Component {
       buttons = (
         <span>
           <Button disabled type="button" className="btn btn-secondary">Resolve</Button>
-          <Button onClick={() => store.dispatch(ticketActions.updateTicketSocket(this.props.socket, this.props.ticket.messageId, 'deleted', null))} type="button" className="btn btn-success">Delete</Button>
+          <Button onClick={() => store.dispatch(ticketActions.updateTicketSocket(this.props.socket, this.props.ticket.messageId, 'deleted', null, ''))} type="button" className="btn btn-success">Delete</Button>
         </span>
       )
     } else {
       //if someone does accept it, enable resolve and disable the delete button
       buttons = (
-        <span>
-          <Button onClick={() => store.dispatch(ticketActions.updateTicketSocket(this.props.socket, this.props.ticket.messageId, 'resolved', (this.props.ticket.mentorId || null)))} type="button" className="btn btn-secondary">Resolve</Button>
-          <Button disabled type="button" className="btn btn-success">Delete</Button>
+        
+         
+        <span display='inline'>
+          
+          <ResolveBtn 
+            messageId={this.props.ticket.messageId} //passes specific ticket Id
+            updateRating={this.props.updateRating} //to update snaps
+            updateFeedback={this.props.updateFeedback} //updates feedback based on user input
+            // postFeedback={this.props.postFeedback}  //to send feedback to database
+            // resolveTicket={this.props.resolveTicket} //submit button finally invokes resolveTicket
+            resolveTicket={() => store.dispatch(ticketActions.updateTicketSocket(this.props.socket, this.props.ticket.messageId, 'resolved', (this.props.ticket.mentorId || null)))}
+          />
+
+        <Button onClick={() => store.dispatch(ticketActions.updateTicketSocket(this.props.socket, this.props.ticket.messageId, 'resolved', (this.props.ticket.mentorId || null)))} type="button" className="btn btn-secondary">Resolve</Button>
+          
         </span>
       )
     }
