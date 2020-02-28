@@ -35,10 +35,11 @@ class MenteeTicketBox extends Component {
     } else {
       //if someone does accept it, enable resolve and disable the delete button
       buttons = (
-        <span>
+        <span display='inline'>
           {/* <Button type="button" className="btn btn-secondary">
               Resolve
           </Button> */}
+          
           {/*resolve button testing*/}
           <ResolveBtn 
             messageId={this.props.ticket.messageId} //passes specific ticket Id
