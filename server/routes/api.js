@@ -69,7 +69,7 @@ apiRouter.put(
 
 apiRouter.post(
   "/rooms/joinRoom",
-  // jwtsController.isLoggedIn,
+  jwtsController.isLoggedIn,
   roomsController.joinRoom,
   roomsController.updateActiveRoom,
   roomsController.getActiveRoom,
