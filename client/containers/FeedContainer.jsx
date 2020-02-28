@@ -69,9 +69,9 @@ class FeedContainer extends Component {
     document.title = "SnapDesk";
   }
 
-  componentDidUpdate() {
-    document.title = "(" + this.props.ticketsCount + ") " + "SnapDesk";
-  }
+  // componentDidUpdate() {
+  //   document.title = "(" + this.props.ticketsCount + ") " + "SnapDesk";
+  // }
 
   render() {
     // build activeTickets list
