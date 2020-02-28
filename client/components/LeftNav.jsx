@@ -11,6 +11,7 @@ const LeftNav = props => {
   let roomList = [];
   if (props.rooms.length > 0) {
     roomList = props.rooms.map((room, i) => {
+      console.log('PROPS: ', props);
       if (room.id === props.activeRoom.id) {
         return (
           <NavDropdown.Item

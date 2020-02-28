@@ -27,7 +27,8 @@ const mapStateToProps = state => ({
   activeTickets: state.tickets.activeTickets,
   ticketsCount: state.tickets.ticketsCount,
   roomId: state.rooms.activeRoom.id,
-  roomName: state.rooms.activeRoom.name
+  roomName: state.rooms.activeRoom.name,
+  feedback: state.tickets.feedback,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -102,10 +103,11 @@ class FeedContainer extends Component {
           ticketBox = (
             <MenteeTicketBox
               deleteTicket={this.props.deleteTicket}
-              resolveTicket={this.props.resolveTicket} // resolve button related
+              // resolveTicket={this.props.resolveTicket} // resolve button related
               updateRating={this.props.updateRating}
               updateFeedback={this.props.updateFeedback}
-              postFeedback={this.props.postFeedback} // resolve button related
+              feedback={this.props.activeTickets[i].feedback}
+              // postFeedback={this.props.postFeedback} // resolve button related
               messageInput={this.props.activeTickets[i].messageInput}
               messageRating={this.props.activeTickets[i].messageRating}
               ticket={this.props.activeTickets[i]}

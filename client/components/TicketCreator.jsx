@@ -21,10 +21,6 @@ const TicketCreator = props => (
         e.preventDefault();
         store.dispatch(ticketActions.postTicketSocket(props.socket, props.userId, props.messageInput, props.messageRating, props.roomId))
       }}
-      // onSubmit={e => {
-      //   e.preventDefault();
-      //   props.postTicket();
-      // }}
     >
       <Form.Group
         controlId="exampleForm.ControlTextarea1"

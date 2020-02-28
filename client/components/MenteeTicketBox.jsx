@@ -45,12 +45,8 @@ class MenteeTicketBox extends Component {
             messageId={this.props.ticket.messageId} //passes specific ticket Id
             updateRating={this.props.updateRating} //to update snaps
             updateFeedback={this.props.updateFeedback} //updates feedback based on user input
-            // postFeedback={this.props.postFeedback}  //to send feedback to database
-            // resolveTicket={this.props.resolveTicket} //submit button finally invokes resolveTicket
-            resolveTicket={() => store.dispatch(ticketActions.updateTicketSocket(this.props.socket, this.props.ticket.messageId, 'resolved', (this.props.ticket.mentorId || null)))}
+            resolve={() => store.dispatch(ticketActions.updateTicketSocket(this.props.socket, this.props.ticket.messageId, 'resolved', (this.props.ticket.mentorId || null), this.props.feedback))}
           />
-
-        <Button onClick={() => store.dispatch(ticketActions.updateTicketSocket(this.props.socket, this.props.ticket.messageId, 'resolved', (this.props.ticket.mentorId || null)))} type="button" className="btn btn-secondary">Resolve</Button>
           
         </span>
       )

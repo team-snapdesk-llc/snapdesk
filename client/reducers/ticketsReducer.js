@@ -75,12 +75,15 @@ const ticketsReducer = (state = ticketState, action) => {
         messageId: action.payload.ticketId,
         status: action.payload.status,
         mentorId: action.payload.mentorId,
+        feedback: action.payload.feedback,
       };
       return { //return updated state
         ...state,
-        activeTickets: updatedTickets };
+        activeTickets: updatedTickets,
+       };
 
     case types.UPDATE_FEEDBACK:
+      console.log('FEEDBACK: ', action.payload)
       return {...state, feedback: action.payload };
         
     case types.UPDATE_MESSAGE:

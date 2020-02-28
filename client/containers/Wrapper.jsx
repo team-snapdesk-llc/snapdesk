@@ -43,20 +43,13 @@ class Wrapper extends Component {
   componentDidMount() {
     this.props.getUserData();
     setTimeout(() => this.props.getRooms(this.props.userId), 1000);
-    
-    // .then(res => {
-    //   console.log('RESULT', res)
-    //   this.props.getRooms(this.props.userId)
-      
-    // })
-    // .then(res => {
-    //   console.log('now get tickets')
-    //     this.props.getTickets(this.props.activeRoom.id)
-    // });
   }
 
   componentDidUpdate() {
-    setTimeout(() => this.props.getTickets(this.props.activeRoom.id), 0);
+    if (this.props.activeRoom.id) {
+      // console.log('ACTIVE ROOM: ', this.props.activeRoom.id);
+      setTimeout(() => this.props.getTickets(this.props.activeRoom.id), 0);
+    }
   }
 
   render() {
@@ -80,7 +73,7 @@ class Wrapper extends Component {
             />
           </div>
           <div className="col-8">
-            <FeedContainer />
+            <FeedContainer {...this.props} />
           </div>
           <div className="col-2">
             <RightNav
