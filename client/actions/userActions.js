@@ -48,3 +48,8 @@ export const getUserData = () => dispatch =>
         })
       }
     })
+
+export const updatePage = (page) => ({
+  type: types.USER_PAGE,
+  payload: page,
+})

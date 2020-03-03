@@ -106,6 +106,9 @@ const LeftNav = props => {
           </InputGroup.Append>
         </InputGroup>
       </Nav.Item>
+      <Nav.Link onClick={() => { props.updatePage('profile') }}>
+      Profile
+    </Nav.Link>
       <Nav.Link
         className="btn btn-success btn-sm "
         width="100px"

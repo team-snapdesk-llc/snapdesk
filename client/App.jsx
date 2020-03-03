@@ -15,7 +15,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Wrapper from './containers/Wrapper';
 
-
 const mapStateToProps = ({ user: { isLoggedIn } }) => ({
   isLoggedIn,
 });
