@@ -9,15 +9,17 @@
  * ************************************
  */
 
-import React from "react";
-import { Form, Button } from "react-bootstrap";
+import React from 'react';
+import { Form, Button } from 'react-bootstrap';
+import * as ticketActions from "../actions/ticketActions";
+import store from '../store.js';
 
 const TicketCreator = props => (
   <div>
     <Form
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault();
-        props.postTicket(props.roomId);
+        store.dispatch(ticketActions.postTicketSocket(props.socket, props.userId, props.messageInput, props.messageRating, props.roomId))
       }}
     >
       <Form.Group

@@ -16,6 +16,9 @@ import * as ticketActions from "../actions/ticketActions";
 import MenteeTicketBox from "../components/MenteeTicketBox";
 import BystanderTicketBox from "../components/BystanderTicketBox";
 import TicketCreator from "../components/TicketCreator";
+import io from "socket.io-client";
+import store from '../store.js';
+import localIp from '../../server/_secret/localIP.js';
 
 const mapStateToProps = state => ({
   userId: state.user.userId,
@@ -24,33 +27,47 @@ const mapStateToProps = state => ({
   activeTickets: state.tickets.activeTickets,
   ticketsCount: state.tickets.ticketsCount,
   roomId: state.rooms.activeRoom.id,
-  roomName: state.rooms.activeRoom.name
+  roomName: state.rooms.activeRoom.name,
+  feedback: state.tickets.feedback,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(ticketActions, dispatch);
 
+let socket;
+
 class FeedContainer extends Component {
   constructor(props) {
     super(props);
+
+    const {dispatch} = this.props
+	
+	   socket = io.connect(localIp)
+	   console.dir(socket)
+	   
+	   socket.on('ticketPosted',(res)=>{
+       console.dir(res)
+       console.log('POST ROOM ID: ', this.props.roomId)
+       this.props.getTickets(this.props.roomId);
+		   store.dispatch(ticketActions.postTicket(res))
+	   })
+
+	   socket.on('ticketUpdated',(res)=>{
+       console.dir(res)
+       console.log('UPDATE ROOM ID: ', this.props.roomId)
+       this.props.getTickets(this.props.roomId);
+		   store.dispatch(ticketActions.updateTicket(res))
+	   })
   }
 
-  // componentWillMount() {
-  //   this.props.getTickets(this.props.roomId);
-  // }
+  componentDidMount() {
+    setTimeout(() => this.props.getTickets(this.props.roomId), 1000);
+  }
 
-  // componentDidMount() {
-  //   //set the timer for how often the ticket feed will reload active tickets
-  //   this.interval = setInterval(
-  //     () => this.props.getTickets(this.props.roomId),
-  //     5000
-  //   );
-  // }
-
-  // componentWillUnmount() {
-  //   clearInterval(this.interval);
-  //   document.title = "SnapDesk";
-  // }
+  componentWillUnmount() {
+    // clearInterval(this.interval);
+    document.title = "SnapDesk";
+  }
 
   // componentDidUpdate() {
   //   document.title = "(" + this.props.ticketsCount + ") " + "SnapDesk";
@@ -76,9 +93,9 @@ class FeedContainer extends Component {
               messageInput={this.props.activeTickets[i].messageInput}
               messageRating={this.props.activeTickets[i].messageRating}
               ticket={this.props.activeTickets[i]}
-              //adding new userId
               userId={this.props.userId}
               key={this.props.activeTickets[i].messageId}
+              socket={socket}
             />
           );
           // otherwise render the mentee ticket box
@@ -86,11 +103,16 @@ class FeedContainer extends Component {
           ticketBox = (
             <MenteeTicketBox
               deleteTicket={this.props.deleteTicket}
-              resolveTicket={this.props.resolveTicket}
+              // resolveTicket={this.props.resolveTicket} // resolve button related
+              updateRating={this.props.updateRating}
+              updateFeedback={this.props.updateFeedback}
+              feedback={this.props.activeTickets[i].feedback}
+              // postFeedback={this.props.postFeedback} // resolve button related
               messageInput={this.props.activeTickets[i].messageInput}
               messageRating={this.props.activeTickets[i].messageRating}
               ticket={this.props.activeTickets[i]}
               key={this.props.activeTickets[i].messageId}
+              socket={socket}
             />
           );
         }
@@ -103,11 +125,11 @@ class FeedContainer extends Component {
         <h1>{this.props.roomName}</h1>
         <div className="ticketDisplay overflow-auto">{activeTickets}</div>
         <div className="ticketCreator">
-          <TicketCreator
-            {...this.props}
-            key={this.props.userId}
-            roomId={this.props.roomId}
-          />
+          <TicketCreator 
+          {...this.props} 
+          key={this.props.userId} 
+          roomId={this.props.roomId}
+          socket={socket} />
         </div>
       </div>
     );

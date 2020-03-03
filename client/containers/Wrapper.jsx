@@ -35,7 +35,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...userActions, ...roomActions }, dispatch);
+  bindActionCreators({ ...userActions, ...roomActions, ...ticketActions }, dispatch);
 
 class Wrapper extends Component {
   constructor(props) {
@@ -43,9 +43,15 @@ class Wrapper extends Component {
   }
 
   componentDidMount() {
-    this.props.getUserData().then(res => {
-      this.props.getRooms(this.props.userId);
-    });
+    this.props.getUserData();
+    setTimeout(() => this.props.getRooms(this.props.userId), 1000);
+  }
+
+  componentDidUpdate() {
+    if (this.props.activeRoom.id) {
+      // console.log('ACTIVE ROOM: ', this.props.activeRoom.id);
+      setTimeout(() => this.props.getTickets(this.props.activeRoom.id), 0);
+    }
   }
 
   render() {
@@ -54,7 +60,7 @@ class Wrapper extends Component {
     if (this.props.currPage == 'main') {
       component = (
         <div className="feedContainer col-8">
-          <FeedContainer />
+          <FeedContainer {...this.props} />
         </div>
       );
     }
@@ -88,13 +94,7 @@ class Wrapper extends Component {
 
           </div>
           {component}
-          {/* <div className="profileContainer">
-            <Profile />
-          </div>
-
-          <div className="col-8">
-            <FeedContainer />
-          </div> */}
+          
           <div className="col-2">
             <RightNav
               ticketsCount={this.props.ticketsCount}

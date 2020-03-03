@@ -12,6 +12,8 @@
 
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import * as ticketActions from "../actions/ticketActions";
+import store from '../store.js';
 
 class BystanderTicketBox extends Component {
   constructor(props) {
@@ -27,10 +29,7 @@ class BystanderTicketBox extends Component {
       //Accept button will be active but Cancel button will not and mentee is anonymous
       buttons = (
         <span>
-          <Button onClick={() => this.props.acceptTicket({
-            userId: this.props.userId,
-            messageId: this.props.ticket.messageId 
-          })} type="button" className="btn btn-success">Accept</Button>
+          <Button onClick={() => store.dispatch(ticketActions.updateTicketSocket(this.props.socket, this.props.ticket.messageId, 'pending', (this.props.userId || null), ''))} type="button" className="btn btn-success">Accept</Button>
           <Button disabled type="button" className="btn btn-secondary">Cancel (disabled)</Button>
        </span>
         )
@@ -49,7 +48,7 @@ class BystanderTicketBox extends Component {
       buttons = (
         <span>
           <Button disabled type="button" className="btn btn-success">Accept (disabled)</Button>
-          <Button onClick={() => this.props.cancelAccept(this.props.ticket.messageId)} type="button" className="btn btn-warning">Cancel</Button>
+          <Button onClick={() => store.dispatch(ticketActions.updateTicketSocket(this.props.socket, this.props.ticket.messageId, 'active', null, ''))} type="button" className="btn btn-warning">Cancel</Button>
        </span>
         )
     }

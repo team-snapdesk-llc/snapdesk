@@ -25,7 +25,7 @@ const RightNav = props => {
     <>
       <Nav defaultActiveKey="/feed" className="flex-column justify-content-end">
         <Nav.Item>Active Tickets: {props.ticketsCount}</Nav.Item>
-        <Nav.Item>Leaderboard: </Nav.Item>
+        <Nav.Item>Users: </Nav.Item>
       </Nav>
 
       <ListGroup>

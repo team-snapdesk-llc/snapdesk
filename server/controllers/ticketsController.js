@@ -77,14 +77,25 @@ ticketsController.addTicket = (req, res, next) => {
 ticketsController.updateTicketStatus = (req, res, next) => {
   console.log("UPDATE REQ BODY: ", req.body);
   const { ticketId, status, mentorId } = req.body;
-  const updateTicket = {
-    text: `
+  if (!mentorId) {
+    const updateTicket = {
+      text: `
+      UPDATE tickets
+      SET status = $1
+      WHERE _id = $2;
+    `,
+    values: [status, ticketId]
+    }
+  } else {
+    const updateTicket = {
+      text: `
       UPDATE tickets
       SET status = $1, mentor_id = $3
       WHERE _id = $2;
-    `,
-    values: [status, ticketId, mentorId]
-  };
+      `,
+      values: [status, ticketId, mentorId]
+    };
+  }
 
   db.query(updateTicket)
     .then(success => next())
